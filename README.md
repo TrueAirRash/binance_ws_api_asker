@@ -27,54 +27,73 @@
 
 ## 📌 Установка и настройка
 
-### 1️⃣ Клонирование проекта
+### Клонирование проекта
 ```
 git clone https://github.com/TrueAirRash/binance_ws_api_asker.git
 cd crypto_project
 ```
 ## Настройка виртуального окружения
+```
 python3 -m venv venv
 source venv/bin/activate  # для Linux
-
+```
 ## Установка зависимостей
+```
 pip install -r requirements.txt
-
+```
 ## Настройка базы данных
 Используется POSTGRESQL, поэтому сначала следует установить и запусти сервер. Затем сделать базу данных:
-
+```
 CREATE DATABASE crypto_db;
 CREATE USER crypto_user WITH PASSWORD 'my_pass_123';
 ALTER ROLE crypto_user SET client_encoding TO 'utf8';
 ALTER ROLE crypto_user SET default_transaction_isolation TO 'read committed';
 ALTER ROLE crypto_user SET timezone TO 'UTC';
 GRANT ALL PRIVILEGES ON DATABASE crypto_db TO crypto_user;
-
+```
 
 ## Применение миграций
+```
 python manage.py migrate
-
-## Запуск сервера
+```
+## Запуск сервера Django и Запуск WebSOCKET-сервера
+Из корня проекта выполнить:
+```
 python3 manage.py runserver
-
-## Запуск WebSOCKET-сервера
-Для работы WebSOCKET в Django Channels используй Daphne:
+```
+и (для работы WebSOCKET в Django Channels используй Daphne):
+```
 daphne -b 0.0.0.0 -p 8001 cryp_proj.asgi:application
-
-Затем с рабочей машины перейти на http://127.0.0.1:8000/
-Или на http://127.0.0.1:8000/prices
-
+```
+Затем с рабочей машины перейти на 
+```
+http://127.0.0.1:8000/
+```
+Или на 
+```
+http://127.0.0.1:8000/prices
+```
 
 
 ## Тестирование проекта
-Проект использует pytest, pytest-asyncio, pytest-django.
+Проект использует 
+```pytest, pytest-asyncio, pytest-django.
+```
 
 ✅ Для корректного прохождения тестирования необходимо:
-перейти в PGSQL, выполнив:  sudo -u postgres psql
-в открывшейся консоли PGSQL выполнить: \du
-пользователю, фигурирующему в  settings.py (crypto_user), дать соответствующие права: ALTER USER crypto_user CREATEDB;
+перейти в PGSQL, выполнив:  
+```sudo -u postgres psql
+```
+в открывшейся консоли PGSQL выполнить: 
+```\du
+```
+пользователю, фигурирующему в  settings.py (crypto_user), дать соответствующие права: 
+```ALTER USER crypto_user CREATEDB;
+```
 
 ✅ Запуск всех тестов:
-pytest
+```pytest
+```
 
 ### 👋Для связи - пишите разработчику в TG: [@zakRash123](https://t.me/zakRash123) 
 
