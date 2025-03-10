@@ -104,7 +104,7 @@ sudo -u postgres psql
 ALTER USER crypto_user CREATEDB;
 ```
 
-✅ Запуск всех тестов:
+✅ Запуск всех тестов. Из корня проекта выполнить:
 ```
 pytest
 ```

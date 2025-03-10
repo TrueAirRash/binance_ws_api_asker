@@ -1,32 +1,23 @@
 import pytest
-import asyncio
 import json
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock, patch
 from cryp_app.binance_ws import binance_websocket
 
 @pytest.mark.asyncio
-async def test_binance_websocket(mocker):
-    """Тестирует обработку сообщений WebSocket от Binance"""
-
-    # Создаём мок WebSocket-соединения
+async def test_binance_websocket():
     mock_websocket = AsyncMock()
     
-    # Используем итератор для side_effect, чтобы корректно вызывать .recv()
-    mock_websocket.recv.side_effect = iter([
-        asyncio.Future(),  # Первое сообщение
-        asyncio.Future(),  # Второе сообщение
-        asyncio.CancelledError(),  # Завершение цикла
-    ])
+    # Симуляция JSON-ответ от Binance
+    mock_response = json.dumps({"e": "trade", "p": "50000.00"})  # Пример ответа
     
-    # Заполняем будущее значение
-    mock_websocket.recv.side_effect.__next__().set_result(json.dumps({"s": "BTCUSDT", "p": "45000.00"}))
-    mock_websocket.recv.side_effect.__next__().set_result(json.dumps({"s": "ETHUSDT", "p": "3200.00"}))
+    mock_websocket.recv = AsyncMock(return_value=mock_response)  # Мок recv()
 
-    # Мокаем websockets.connect
-    mock_connect = mocker.patch("websockets.connect", return_value=AsyncMock())
-    mock_connect.return_value.__aenter__.return_value = mock_websocket
+    # Добавление async with
+    mock_connect = AsyncMock()
+    mock_connect.__aenter__.return_value = mock_websocket
+    mock_connect.__aexit__.return_value = AsyncMock()
 
-    # Проверяем, что вызывается CancelledError (имитация выхода)
-    with pytest.raises(asyncio.CancelledError):
+    with patch('websockets.connect', return_value=mock_connect):
         await binance_websocket()
+        mock_websocket.recv.assert_awaited()  # Проверяем, что recv() вызван
 
