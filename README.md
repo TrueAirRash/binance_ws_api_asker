@@ -28,10 +28,10 @@
 ## 📌 Установка и настройка
 
 ### 1️⃣ Клонирование проекта
-
+```
 git clone https://github.com/TrueAirRash/binance_ws_api_asker.git
 cd crypto_project
-
+```
 ## Настройка виртуального окружения
 python3 -m venv venv
 source venv/bin/activate  # для Linux
