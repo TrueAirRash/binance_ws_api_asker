@@ -42,7 +42,16 @@ source venv/bin/activate  # для Linux
 pip install -r requirements.txt
 ```
 ## Настройка базы данных
-Используется POSTGRESQL, поэтому сначала следует установить и запусти сервер. Затем сделать базу данных:
+Используется POSTGRESQL, поэтому сначала следует установить и запусти сервер. Затем сделать базу данных. Из первичных действий этого подраздела - это:
+```
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+```
+затем выполнить:
+```
+sudo -u postgres psql
+```
+После этого шага в открывшейся интерактивной консоли PGSQL выполнить слкдующие команды:
 ```
 CREATE DATABASE crypto_db;
 CREATE USER crypto_user WITH PASSWORD 'my_pass_123';
