@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Prices</title>
+</head>
+<body>
+    <h1>CRYPTO Prices (Live)</h1>
+    <ul id="prices-list"></ul>
+
+    <script>
+        const socket = new WebSocket("ws://127.0.0.1:8001/ws/prices/");
+        
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            const pricesList = document.getElementById("prices-list");
+            const listItem = document.createElement("li");
+            
+            listItem.textContent = `Symbol: ${data.symbol}, Price: ${data.price}`;
+            pricesList.prepend(listItem);
+        };
+
+        socket.onclose = function(event) {
+            console.error("WebSocket closed:", event);
+        };
+    </script>
+</body>
+</html>
