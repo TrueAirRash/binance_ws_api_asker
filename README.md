@@ -28,7 +28,7 @@
 ## 📌 Установка и настройка
 
 ### 1️⃣ Клонирование проекта
-```bash
+
 git clone https://github.com/TrueAirRash/binance_ws_api_asker.git
 cd crypto_project
 
