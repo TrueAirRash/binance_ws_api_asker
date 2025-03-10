@@ -30,7 +30,7 @@
 ### Клонирование проекта
 ```
 git clone https://github.com/TrueAirRash/binance_ws_api_asker.git
-cd crypto_project
+cd binance_ws_api_asker
 ```
 ## Настройка виртуального окружения
 ```
